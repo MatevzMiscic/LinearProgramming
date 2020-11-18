@@ -1,4 +1,4 @@
-from simplex2 import *
+from simplex import *
 
 # Spremenljivke so x1,...,x9.
 # Zadnji dve vrstici ustrezata enakosti x1 + ... + x9 = 1

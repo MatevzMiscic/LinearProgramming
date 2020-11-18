@@ -1,4 +1,4 @@
-from simplex2 import *
+from simplex import *
 
 # troprstna mora
 def val(i, j):
