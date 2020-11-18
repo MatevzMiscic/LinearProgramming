@@ -68,8 +68,10 @@ class frac:
         return hash(self.num / self.den)
 
     def __repr__(self):
-        return f'{self.num / self.den:.2f}'
-        #return f'{self.num} / {self.den}'
+        #return f'{self.num / self.den:.2f}'
+        if self.num == 0:
+            return "0"
+        return f'{self.num}/{self.den}'
 
 a = frac(2, 3)
 b = frac(1, 2)
