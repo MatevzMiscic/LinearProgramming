@@ -2,7 +2,10 @@ from simplex2 import *
 
 # Spremenljivke so x1,...,x9.
 # Zadnji dve vrstici ustrezata enakosti x1 + ... + x9 = 1
-# Funkcional je ničeln, saj iščemo vse strategije
+# Funkcional je ničeln, saj iščemo vse strategije.
+
+# To je v resnici linearni program Pi_1, le da je izbrisana spremenljivka w, 
+# ker vemo, da je v optimalni rešitvi njena vrednost enaka 0.
 
 A = [
     [0, 2, 2, -3, 0, 0, -4, 0, 0], 
