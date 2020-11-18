@@ -63,9 +63,12 @@ class Tableau:
             return False
         return col
 
-    def leaving_rule(self, col, row=0):
-        # izberemo izstopajočo spremenljivko (oziroma vrstico)
+    def leaving_rule(self, col, out=None):
         row = 0
+        if out is not None:
+            for i, var in enumerate(self.base):
+                if var == out: row = i
+        # izberemo izstopajočo spremenljivko (oziroma vrstico)
         for i in range(self.m):
             if self.table[i][col] <= 0:
                 continue 
@@ -97,21 +100,21 @@ class Tableau:
         self.base[row] = col
         return True
 
-    def iterate(self):
+    def iterate(self, out=0):
         col = self.entering_rule()
         # če smo končali
         if col is False:
             print("Konec")
             return False
         # če je problem neomejen
-        row = self.leaving_rule(col)
+        row = self.leaving_rule(col, out)
         if row is False:
             print("Neomejen problem")
             return False
         return self.pivot(row, col)
 
-    def simplex(self):
-        while self.iterate():
+    def simplex(self, out=0):
+        while self.iterate(out):
             self.print()
             print()
 
@@ -147,10 +150,10 @@ def solve(A, b, c):
         tab = Tableau(A, b, d)
         tab.pivot(least, n)
         tab.print()
-        tab.simplex()
+        tab.simplex(n)
         if tab.base_val() < 0:
             return "Problem ni dopusten"
-        tab.del_var(n)
+        assert tab.del_var(n)
         c = [frac(v) for v in c]
         for i in range(m + 1): c.append(frac(0))
         tab.express(c)
@@ -299,7 +302,7 @@ tab = solve(A, b, c)
 sols = findall(tab)
 #"""
 
-#"""
+"""
 A = [
     [-1, 0, 2, 2, -3, 0, 0, -4, 0], 
     [-1, -2, 0, 0, 0, 3, 3, -4, 0], 
