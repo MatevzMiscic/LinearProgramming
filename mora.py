@@ -1,5 +1,7 @@
 from simplex import *
 
+# Koda je dostopna na https://github.com/MatevzMiscic/LinearProgramming
+
 # Spremenljivke so x1,...,x9.
 # Zadnji dve vrstici ustrezata enakosti x1 + ... + x9 = 1
 # Funkcional je ničeln, saj iščemo vse strategije.
