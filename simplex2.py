@@ -104,7 +104,6 @@ class Tableau:
         col = self.entering_rule()
         # če smo končali
         if col is False:
-            print("Konec")
             return False
         # če je problem neomejen
         row = self.leaving_rule(col, out)
@@ -115,20 +114,20 @@ class Tableau:
 
     def simplex(self, out=0):
         while self.iterate(out):
-            self.print()
             print()
+            self.print()
 
     def print(self):
         for i, k in enumerate(self.base):
             #print(f"x{k + 1} = {self.table[i][-1]:.2f}", end="")
-            print(f"x{k + 1} = " + str(self.table[i][-1]), end="")
+            print(f"x{k + 1} = " + self.table[i][-1].unsignstr(), end="")
             for j in range(self.n + self.m):
                 if self.in_base[j]: continue
                 coef = -self.table[i][j]
                 print(coef.valstr() + f" * x{j + 1}", end="")
             print()
         val = -self.table[self.m][-1]
-        print(f"z  = " + str(val), end="")
+        print(f"z  = " + val.unsignstr(), end="")
         for j in range(self.n + self.m):
             if self.in_base[j]: continue
             coef = self.table[self.m][j]
@@ -143,12 +142,14 @@ def solve(A, b, c):
         if b[i] < b[least]:
             least = i
     if b[least] < 0:
-        # bdr nedopustna, naredimo dvofazno metodo simpleksov
+        # br nedopustna, naredimo dvofazno metodo simpleksov
+        print("Začetni slovar je nodepusten.")
         for row in A:
             row.append(-1)
         d = [-int(i == n) for i in range(n + 1)]
         tab = Tableau(A, b, d)
         tab.pivot(least, n)
+        print("Reševanje prve faze metode simpleksov...")
         tab.print()
         tab.simplex(n)
         if tab.base_val() < 0:
@@ -158,12 +159,16 @@ def solve(A, b, c):
         for i in range(m + 1): c.append(frac(0))
         tab.express(c)
         tab.table[-1] = c[::]
+        print("Reševanje druge faze metode simpleksov...")
         tab.print()
         tab.simplex()
     else:
         # bdr dopustna
+        print("Začetni slovar je nodepusten.")
+        print("Reševanje problema z metodo simpleksov...")
         tab = Tableau(A, b, c)
         tab.simplex()
+    print("Problem rešen.")
     return tab
 
 def lsb(n):
@@ -255,7 +260,6 @@ def findall(tab):
             if visited[key] != -1:
                 row, _, col = visited[key]
                 tab.pivot(row, col)      
-    tab.print()
     return solutions
 
 

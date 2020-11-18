@@ -63,6 +63,8 @@ class frac:
         return f'{abs(self.num) / self.den:.2f}'
     def valstr(self):
         return self.signstr() + self.absstr()
+    def unsignstr(self):
+        return f'{self.num / self.den:.2f}'
 
     def __hash__(self):
         return hash(self.num / self.den)
